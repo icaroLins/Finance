@@ -97,6 +97,9 @@ mvn spring-boot:run
 ````
 ### 👨‍💻 Autor
 Ícaro Lins
+
 Desenvolvedor Backend Java
+
 GitHub: https://github.com/icaroLins
+
 Linkedin: https://www.linkedin.com/in/icaro-lins-gomes-16324422b/
