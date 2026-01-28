@@ -83,8 +83,6 @@ spring.datasource.password=sua_senha
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-# clonar o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
 
 ````
 
