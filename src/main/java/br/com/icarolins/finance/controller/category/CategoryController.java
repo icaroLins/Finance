@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +18,6 @@ import br.com.icarolins.finance.model.User;
 import br.com.icarolins.finance.model.category.CategoryFinance;
 import br.com.icarolins.finance.service.UserService;
 import br.com.icarolins.finance.service.category.CategoryService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/category")
@@ -39,12 +42,35 @@ public class CategoryController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> listCategory(Authentication authentication){
+    public ResponseEntity<?> listCategory(Authentication authentication) {
         String email = authentication.getName();
         User user = userService.searchByEmail(email);
 
         List<CategoryFinance> list = service.listCategoryUser(user.getId());
 
         return ResponseEntity.ok(list);
+    }
+
+    @PutMapping("/edit/{categoryId}")
+    public ResponseEntity<?> editCategory(Authentication authentication,
+            @PathVariable Long categoryId,
+            @RequestBody CategoryFinance categoryFinance) {
+        String email = authentication.getName();
+        User user = userService.searchByEmail(email);
+
+        CategoryFinance category = service.editCategory(categoryFinance, user.getId(), categoryId);
+
+        return ResponseEntity.ok(category);
+    }
+
+    @DeleteMapping("/delete/{categoryId}")
+    public ResponseEntity<Void> deleteCategoty(Authentication authentication, 
+        @PathVariable Long categoryId) {
+        String email = authentication.getName();
+        User user = userService.searchByEmail(email);
+
+        service.deleteCategory(user.getId(), categoryId);
+
+        return ResponseEntity.noContent().build();
     }
 }

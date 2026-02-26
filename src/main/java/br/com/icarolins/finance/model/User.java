@@ -1,5 +1,6 @@
 package br.com.icarolins.finance.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.icarolins.finance.dto.Role;
@@ -44,6 +45,10 @@ public class User {
     private Role role;
 
     private LocalDate date;
+
+    private BigDecimal valuePROHIBITED;
+
+    private BigDecimal valueExit;
 
     public Long getId() {
         return id;
@@ -99,6 +104,22 @@ public class User {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public BigDecimal getValuePROHIBITED() {
+        return valuePROHIBITED;
+    }
+
+    public void setValuePROHIBITED(BigDecimal valuePROHIBITED) {
+        this.valuePROHIBITED = valuePROHIBITED;
+    }
+
+    public BigDecimal getValueExit() {
+        return valueExit;
+    }
+
+    public void setValueExit(BigDecimal valueExit) {
+        this.valueExit = valueExit;
     }
 
     

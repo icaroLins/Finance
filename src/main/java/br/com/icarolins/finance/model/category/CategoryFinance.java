@@ -18,13 +18,14 @@ public class CategoryFinance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String name;
 
+    @Column(nullable = true, unique = false)
     private String description;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 
     public CategoryFinance() {

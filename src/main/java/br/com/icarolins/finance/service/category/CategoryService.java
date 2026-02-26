@@ -14,19 +14,43 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Optional<CategoryFinance> findByCategory(Long id){
-        return categoryRepository.findById(id);      
+    public Optional<CategoryFinance> findByCategory(Long id) {
+        return categoryRepository.findById(id);
     }
 
-    public CategoryFinance createCategory(CategoryFinance finance){
+    public CategoryFinance createCategory(CategoryFinance finance) {
         return categoryRepository.save(finance);
     }
 
-    public List<CategoryFinance> listCategory(){
+    public List<CategoryFinance> listCategory() {
         return categoryRepository.findAll();
     }
 
-    public List<CategoryFinance> listCategoryUser(Long UserId){
+    public List<CategoryFinance> listCategoryUser(Long UserId) {
         return categoryRepository.findByUserIsNullOrUserId(UserId);
+    }
+
+    public CategoryFinance editCategory(CategoryFinance newCategory, Long userId, Long categoryId) {
+        CategoryFinance categoryFinance = categoryRepository
+        .findById(categoryId).orElseThrow(()->new RuntimeException("categoria não encontrada"));
+
+        if(!categoryFinance.getUser().getId().equals(userId)){
+            throw new RuntimeException("Você não pode alterar o status dessa categoria!");
+        }
+        categoryFinance.setName(newCategory.getName());
+        categoryFinance.setDescription(newCategory.getDescription());
+
+        return categoryRepository.save(categoryFinance);
+    }
+
+    public void deleteCategory(Long userId, Long categoryId){
+        CategoryFinance categoryFinance = categoryRepository
+        .findById(categoryId).orElseThrow(()->new RuntimeException("categoria não encontrada"));
+
+        if(!categoryFinance.getUser().getId().equals(userId)){
+            throw new RuntimeException("Você não pode alterar o status dessa categoria!");
+        }
+
+        categoryRepository.deleteById(categoryId);
     }
 }

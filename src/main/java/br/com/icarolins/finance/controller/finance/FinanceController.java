@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.icarolins.finance.dto.finance.FinanceRequestDTO;
 import br.com.icarolins.finance.model.User;
 import br.com.icarolins.finance.model.finance.Finance;
 import br.com.icarolins.finance.service.UserService;
