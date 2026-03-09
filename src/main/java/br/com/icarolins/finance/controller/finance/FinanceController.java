@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.icarolins.finance.dto.TypeValue;
 import br.com.icarolins.finance.model.User;
 import br.com.icarolins.finance.model.finance.Finance;
 import br.com.icarolins.finance.service.UserService;
@@ -42,7 +43,7 @@ public class FinanceController {
 
         finance.setUser(user);
 
-        Finance newFinance = financeService.createFinance(finance, categoryId);
+        Finance newFinance = financeService.createFinance(finance, categoryId, user);
 
         return ResponseEntity.ok(newFinance);
     }
@@ -53,6 +54,17 @@ public class FinanceController {
         User user = userService.searchByEmail(email);
 
         List<Finance> list = financeService.listFinance(user.getId());
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/list/type")
+    public ResponseEntity<?> listFinanceType(Authentication authentication,
+            @RequestBody TypeValue type) {
+        String email = authentication.getName();
+        User user = userService.searchByEmail(email);
+
+        List<Finance> list = financeService.listType(user.getId(), type);
 
         return ResponseEntity.ok(list);
     }

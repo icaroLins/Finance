@@ -50,6 +50,16 @@ public class User {
 
     private BigDecimal valueExit;
 
+    private BigDecimal valueTotal;
+
+    public BigDecimal getValueTotal() {
+        return valueTotal;
+    }
+
+    public void setValueTotal(BigDecimal valueTotal) {
+        this.valueTotal = valueTotal;
+    }
+
     public Long getId() {
         return id;
     }

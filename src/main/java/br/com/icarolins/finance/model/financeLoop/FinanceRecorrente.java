@@ -1,7 +1,6 @@
-package br.com.icarolins.finance.model.finance;
+package br.com.icarolins.finance.model.financeLoop;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import br.com.icarolins.finance.dto.TypeValue;
 import br.com.icarolins.finance.model.User;
@@ -15,12 +14,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "finance_tb")
-public class Finance {
-
+public class FinanceRecorrente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,8 +27,6 @@ public class Finance {
     @Enumerated(EnumType.STRING)
     private TypeValue type;
 
-    private LocalDate date;
-
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
@@ -41,29 +35,9 @@ public class Finance {
     @JoinColumn(name = "categoryId", nullable = false)
     private CategoryFinance category;
 
-    public TypeValue getType() {
-        return type;
-    }
+    private int diaDoMes;
 
-    public void setType(TypeValue type) {
-        this.type = type;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public CategoryFinance getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryFinance category) {
-        this.category = category;
-    }
+    private boolean ativo = true;
 
     public Long getId() {
         return id;
@@ -71,14 +45,6 @@ public class Finance {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public BigDecimal getValue() {
@@ -89,4 +55,45 @@ public class Finance {
         this.value = value;
     }
 
+    public TypeValue getType() {
+        return type;
+    }
+
+    public void setType(TypeValue type) {
+        this.type = type;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public CategoryFinance getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryFinance category) {
+        this.category = category;
+    }
+
+    public int getDiaDoMes() {
+        return diaDoMes;
+    }
+
+    public void setDiaDoMes(int diaDoMes) {
+        this.diaDoMes = diaDoMes;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    
 }

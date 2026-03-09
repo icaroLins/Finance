@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import br.com.icarolins.finance.dto.TypeValue;
+import br.com.icarolins.finance.model.User;
 import br.com.icarolins.finance.model.category.CategoryFinance;
 import br.com.icarolins.finance.model.finance.Finance;
 import br.com.icarolins.finance.repository.category.CategoryRepository;
@@ -21,11 +22,19 @@ public class FinanceService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Finance createFinance(Finance finance, Long categoryId) {
+    public Finance createFinance(Finance finance, Long categoryId, User user) {
         CategoryFinance category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
         finance.setCategory(category);
+        if(finance.getType() == TypeValue.PROHIBITED){
+            user.setValuePROHIBITED(finance.getValue().add(user.getValuePROHIBITED()));
+        }else{
+            user.setValueExit(finance.getValue().add(user.getValueExit()));
+        }
+
+        user.setValueTotal(user.getValuePROHIBITED().subtract(user.getValueExit()));
+
         return repository.save(finance);
     }
 
@@ -64,4 +73,9 @@ public class FinanceService {
         
         return repository.findByUserIdAndDateBetween(userId, start, end);
     }
+
+    public List<Finance> listType(Long userId, TypeValue type){
+        return repository.findByUserIdAndType(userId, type);
+    }
+
 }
